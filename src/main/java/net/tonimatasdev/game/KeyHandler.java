@@ -1,4 +1,4 @@
-package net.tonimatasdev;
+package net.tonimatasdev.game;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

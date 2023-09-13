@@ -1,4 +1,4 @@
-package net.tonimatasdev;
+package net.tonimatasdev.game;
 
 import javax.swing.*;
 

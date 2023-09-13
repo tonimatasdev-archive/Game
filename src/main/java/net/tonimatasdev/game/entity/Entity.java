@@ -1,4 +1,4 @@
-package net.tonimatasdev.entity;
+package net.tonimatasdev.game.entity;
 
 public class Entity {
     public int x, y;
