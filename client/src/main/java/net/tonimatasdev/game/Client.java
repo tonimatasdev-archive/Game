@@ -1,8 +1,10 @@
 package net.tonimatasdev.game;
 
 import javax.swing.*;
+import java.io.IOException;
+import java.net.Socket;
 
-public class Main {
+public class Client {
     public static void main(String[] args) {
         JFrame windows = new JFrame();
         windows.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -17,8 +19,13 @@ public class Main {
         windows.setLocationRelativeTo(null);
         windows.setVisible(true);
 
-        TickManager tick = new TickManager();
-        tick.startTickThread();
+        Socket socket;
+        try {
+            socket = new Socket("0.0.0.0", 9999);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         gamePanel.startGameThread();
     }
 }

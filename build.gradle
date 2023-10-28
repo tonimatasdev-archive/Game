@@ -2,19 +2,21 @@ plugins {
     id 'java'
 }
 
-group = 'net.tonimatasdev'
-version = '1.0-SNAPSHOT'
+subprojects {
+    group = 'net.tonimatasdev'
+    version = '1.0-SNAPSHOT'
 
-repositories {
-    mavenCentral()
-}
+    repositories {
+        mavenCentral()
+    }
 
-dependencies {
+    dependencies {
 
-}
+    }
 
-jar {
-    manifest {
-        attributes 'Main-Class': 'net.tonimatasdev.game.Main'
+    jar {
+        manifest {
+            attributes 'Main-Class': 'net.tonimatasdev.game.Main'
+        }
     }
 }
