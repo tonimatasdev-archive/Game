@@ -19,15 +19,37 @@ class Player(var gamePanel: GamePanel, var keyHandler: KeyHandler) : Entity() {
     }
 
     fun update() {
+        var speedX = 0
+        var speedY = 0
         
-        if (keyHandler.upPressed) {
-            worldY -= speed
-        } else if (keyHandler.downPressed) {
-            worldY += speed
-        } else if (keyHandler.leftPressed) {
-            worldX -= speed
-        } else if (keyHandler.rightPressed) {
-            worldX += speed
+        if (keyHandler.upPressed) speedY -= speed
+        if (keyHandler.downPressed) speedY += speed
+        if (keyHandler.leftPressed) speedX -= speed
+        if (keyHandler.rightPressed) speedX += speed
+        
+        if (speedX != 0 && speedY != 0) {
+            if (keyHandler.upPressed && keyHandler.leftPressed) {
+                worldX += speedX+1
+                worldY += speedY+1
+            }
+
+            if (keyHandler.upPressed && keyHandler.rightPressed) {
+                worldX += speedX-1
+                worldY += speedY+1
+            }
+
+            if (keyHandler.downPressed && keyHandler.leftPressed) {
+                worldX += speedX+1
+                worldY += speedY-1
+            }
+
+            if (keyHandler.downPressed && keyHandler.rightPressed) {
+                worldX += speedX-1
+                worldY += speedY-1
+            }
+        } else {
+            worldX += speedX
+            worldY += speedY
         }
     }
     
