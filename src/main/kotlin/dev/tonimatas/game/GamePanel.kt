@@ -16,9 +16,15 @@ class GamePanel() : JPanel(), Runnable {
     val tileSize: Int = originalTileSize * scale // 48x48 tile
     val maxScreenColumn: Int = 16
     val maxScreenRow: Int = 12
-    val screenWidth: Int = tileSize * maxScreenColumn
-    val screenHeight: Int = tileSize * maxScreenRow
+    var screenWidth: Int = tileSize * maxScreenColumn
+    var screenHeight: Int = tileSize * maxScreenRow
 
+    // WORLD SETTINGS
+    val maxWorldColumn = 50
+    val maxWorldRow = 50
+    val worldWidth = maxWorldColumn * tileSize
+    val worldHeight = maxWorldRow * tileSize
+    
     // FPS
     var FPS: Int = 60
     

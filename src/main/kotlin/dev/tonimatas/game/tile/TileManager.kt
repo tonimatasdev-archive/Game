@@ -12,10 +12,10 @@ class TileManager(var gamePanel: GamePanel) {
 
     init {
         tile = arrayOfNulls(10)
-        mapTileNumber = Array(gamePanel.maxScreenColumn) {arrayOfNulls(gamePanel.maxScreenRow)}
+        mapTileNumber = Array(gamePanel.maxWorldColumn) {arrayOfNulls(gamePanel.maxWorldRow)}
 
         getTileImage()
-        loadMap()
+        loadMap("world01")
     }
     
     fun getTileImage() {
@@ -27,19 +27,28 @@ class TileManager(var gamePanel: GamePanel) {
 
         tile[2] = Tile()
         tile[2]!!.image = ImageIO.read(javaClass.getResourceAsStream("/tiles/water.png"))
+
+        tile[3] = Tile()
+        tile[3]!!.image = ImageIO.read(javaClass.getResourceAsStream("/tiles/earth.png"))
+
+        tile[4] = Tile()
+        tile[4]!!.image = ImageIO.read(javaClass.getResourceAsStream("/tiles/tree.png"))
+
+        tile[5] = Tile()
+        tile[5]!!.image = ImageIO.read(javaClass.getResourceAsStream("/tiles/sand.png"))
     }
     
-    fun loadMap() {
-        val inputStream = javaClass.getResourceAsStream("/maps/map01.txt")
+    fun loadMap(worldName: String) {
+        val inputStream = javaClass.getResourceAsStream("/worlds/$worldName.txt")
         val bufferedReader = BufferedReader(InputStreamReader(inputStream!!))
 
         var column = 0
         var row = 0
 
-        while (column < gamePanel.maxScreenColumn && row < gamePanel.maxScreenRow) {
+        while (column < gamePanel.maxWorldColumn && row < gamePanel.maxWorldRow) {
             val line = bufferedReader.readLine()
             
-            while (column < gamePanel.maxScreenColumn) {
+            while (column < gamePanel.maxWorldColumn) {
                 val numbers = line.split(" ")
                 
                 val number = Integer.parseInt(numbers[column])
@@ -48,7 +57,7 @@ class TileManager(var gamePanel: GamePanel) {
                 column++
             }
             
-            if (column == gamePanel.maxScreenColumn) {
+            if (column == gamePanel.maxWorldColumn) {
                 column = 0
                 row++
             }
@@ -59,24 +68,30 @@ class TileManager(var gamePanel: GamePanel) {
     
     fun draw(graphics2D: Graphics2D) {
         
-        var column = 0
-        var row = 0
-        var x = 0
-        var y = 0
+        var worldColumn = 0
+        var worldRow = 0
         
-        while (column < gamePanel.maxScreenColumn && row < gamePanel.maxScreenRow) {
+        while (worldColumn < gamePanel.maxWorldColumn && worldRow < gamePanel.maxWorldRow) {
             
-            val tileNumber = mapTileNumber[column][row]
+            val tileNumber = mapTileNumber[worldColumn][worldRow]
             
-            graphics2D.drawImage(tile[tileNumber!!]!!.image, x, y, gamePanel.tileSize, gamePanel.tileSize, null)
-            column++
-            x += gamePanel.tileSize
+            val worldX = worldColumn * gamePanel.tileSize
+            val worldY = worldRow * gamePanel.tileSize
+            val screenX = worldX - gamePanel.player.worldX + gamePanel.player.screenX
+            val screenY = worldY - gamePanel.player.worldY + gamePanel.player.screenY
             
-            if (column == gamePanel.maxScreenColumn) {
-                column = 0
-                x = 0
-                row++
-                y += gamePanel.tileSize
+            if (worldX + gamePanel.tileSize > gamePanel.player.worldX - gamePanel.player.screenX &&
+                worldX - gamePanel.tileSize < gamePanel.player.worldX + gamePanel.player.screenX &&
+                worldY + gamePanel.tileSize > gamePanel.player.worldY - gamePanel.player.screenY &&
+                worldY - gamePanel.tileSize < gamePanel.player.worldY + gamePanel.player.screenY) {
+                graphics2D.drawImage(tile[tileNumber!!]!!.image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null)
+            }
+            
+            worldColumn++
+            
+            if (worldColumn == gamePanel.maxWorldColumn) {
+                worldColumn = 0
+                worldRow++
             }
         }
     }

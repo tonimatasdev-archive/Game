@@ -1,7 +1,7 @@
 package dev.tonimatas.game.entity
 
 open class Entity {
-    var x: Int = 0
-    var y: Int = 0
+    var worldX: Int = 0
+    var worldY: Int = 0
     var speed: Int = 0
 }
