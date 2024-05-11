@@ -8,29 +8,29 @@ import java.awt.Graphics
 import java.awt.Graphics2D
 import javax.swing.JPanel
 
-class GamePanel() : JPanel(), Runnable {
+class GamePanel : JPanel(), Runnable {
     // SCREEN SETTINGS
-    val originalTileSize: Int = 16 // 16x16 tile
-    val scale: Int = 3
+    private val originalTileSize: Int = 16 // 16x16 tile
+    private val scale: Int = 3
 
     val tileSize: Int = originalTileSize * scale // 48x48 tile
-    val maxScreenColumn: Int = 16
-    val maxScreenRow: Int = 12
+    private val maxScreenColumn: Int = 16
+    private val maxScreenRow: Int = 12
     var screenWidth: Int = tileSize * maxScreenColumn
     var screenHeight: Int = tileSize * maxScreenRow
 
     // WORLD SETTINGS
     val maxWorldColumn = 50
     val maxWorldRow = 50
-    val worldWidth = maxWorldColumn * tileSize
-    val worldHeight = maxWorldRow * tileSize
+    //val worldWidth = maxWorldColumn * tileSize
+    //val worldHeight = maxWorldRow * tileSize
     
     // FPS
-    var FPS: Int = 60
+    private var fps: Int = 60
     
-    val tileManager = TileManager(this)
-    val keyHandler = KeyHandler()
-    var gameThread: Thread? = null
+    private val tileManager = TileManager(this)
+    private val keyHandler = KeyHandler()
+    private var gameThread: Thread? = null
     val player = Player(this, this.keyHandler)
 
     init {
@@ -48,7 +48,7 @@ class GamePanel() : JPanel(), Runnable {
     }
 
     override fun run() {
-        val drawInterval = 1000000000.0 / FPS
+        val drawInterval = 1000000000.0 / fps
         var nextDrawTime = System.nanoTime() + drawInterval
 
         while (gameThread != null) {
@@ -57,7 +57,7 @@ class GamePanel() : JPanel(), Runnable {
             
             try {
                 var reamingTime = nextDrawTime - System.nanoTime()
-                reamingTime = reamingTime / 1000000
+                reamingTime /= 1000000
 
                 if (reamingTime < 0) {
                     reamingTime = 0.0

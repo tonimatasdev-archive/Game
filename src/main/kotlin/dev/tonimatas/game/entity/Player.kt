@@ -5,7 +5,7 @@ import dev.tonimatas.game.KeyHandler
 import java.awt.Color
 import java.awt.Graphics2D
 
-class Player(var gamePanel: GamePanel, var keyHandler: KeyHandler) : Entity() {
+class Player(private var gamePanel: GamePanel, private var keyHandler: KeyHandler) : Entity() {
     var screenX: Int = 0
     var screenY: Int = 0
     
